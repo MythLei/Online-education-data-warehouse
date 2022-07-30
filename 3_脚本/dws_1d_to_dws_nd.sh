@@ -12,9 +12,9 @@ fi
 dws_trade_user_course_order_nd="
 insert overwrite table ${APP}.dws_trade_user_course_order_nd partition(dt)
 select
-    user_id ,
-    course_id ,
-    course_name ,
+    user_id,
+    course_id,
+    course_name,
     sum(if(dt>=date_add('$do_date',-6),order_count_1d,0)),
     sum(if(dt>=date_add('$do_date',-6),order_user_num_1d,0)),
     sum(if(dt>=date_add('$do_date',-6),order_total_amount_1d,0)),

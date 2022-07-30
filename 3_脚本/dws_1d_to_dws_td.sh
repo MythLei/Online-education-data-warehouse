@@ -47,24 +47,24 @@ select
     if(new.user_id is null,old.login_date_last,'$do_date'),
     nvl(old.login_count_td,0)+nvl(new.login_count_1d,0)
 from
-    (
-        select
-            user_id,
-            login_date_last,
-            login_count_td
-        from ${APP}.dws_user_user_login_td
-        where dt=date_add('$do_date',-1)
-    )old
-        full outer join
-    (
-        select
-            user_id,
-            count(*) login_count_1d
-        from ${APP}.dwd_user_login_inc
-        where dt='$do_date'
-        group by user_id
-    )new
-    on old.user_id=new.user_id;
+(
+    select
+        user_id,
+        login_date_last,
+        login_count_td
+    from ${APP}.dws_user_user_login_td
+    where dt=date_add('$do_date',-1)
+)old
+full outer join
+(
+    select
+        user_id,
+        count(*) login_count_1d
+    from ${APP}.dwd_user_login_inc
+    where dt='$do_date'
+    group by user_id
+)new
+on old.user_id=new.user_id;
 "
 case $1 in
     "dws_trade_user_order_td" )
